@@ -1,0 +1,13 @@
+name: WGF
+depend: [WorldGuard, Factions]
+version: 4.0.1
+#version: ${env.BUILD_NUMBER}
+main: Main.main
+database: false
+commands:
+  WGFAdd:
+    description: Adds a faction group to your world guard flag.
+    usage: /WGFAdd region faction
+  WGFRemove:
+    description: Removes a faction group from your world guard flag.
+    usage: /WGFRemove region faction
