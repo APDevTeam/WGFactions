@@ -18,6 +18,10 @@ import com.massivecraft.factions.entity.Faction;
 import com.massivecraft.factions.entity.MPlayer;
 import com.sk89q.worldguard.bukkit.RegionContainer;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.domains.DefaultDomain;
+import com.sk89q.worldguard.protection.flags.DefaultFlag;
+import com.sk89q.worldguard.protection.flags.Flag;
+import com.sk89q.worldguard.protection.flags.StateFlag.State;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
@@ -47,46 +51,31 @@ public class main extends JavaPlugin implements CommandExecutor{
 	}
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		WorldGuardPlugin WG = getWorldGuard();
-		String arg1 = args[0];
-		String arg2 = args[1];
-		RegionContainer container = getWorldGuard().getRegionContainer();
-		RegionManager regions = container.get(((Entity) sender).getWorld());
-		ProtectedRegion region = regions.getRegion(arg1);
-		Bukkit.dispatchCommand(sender, "region flag entry deny");
-		if(cmd.getName() == "WGFAdd" || cmd.getName() == "WGFRemove") {
-			
-			
-			
-			if (cmd.getName() == "WGFAdd" && args.length == 2) {
-				sender.sendMessage(ChatColor.BLUE + "Success!");
-				Faction fac = Faction.get(args[1]);
-				for (MPlayer MPlayer : fac.getMPlayers()) {
-					Player Member = getServer().getPlayer(MPlayer.getName());
-					Bukkit.dispatchCommand(sender, "region addmember " + arg1 + " " + Member.getName());
-					if (ProtectedRegion.isValidId(arg1)) {
-						region.getMembers().addPlayer(Member.getName());
-					}else{
-						sender.sendMessage(ChatColor.RED + arg1 + " Is not a valid region!");
+		if (cmd.getName() == "WGFAdd" || cmd.getName() == "WGFRemove") {
+			if (cmd.getName() == "WGFAdd" && args.length == 2){
+				WorldGuardPlugin plugin = getWorldGuard();
+				RegionManager RM = plugin.getRegionContainer().get(((Entity) sender).getWorld());
+				ProtectedRegion region = RM.getRegion(args[0]);
+				if (region.getOwners().contains(sender.getName())) {
+					region.setFlag(DefaultFlag.ENTRY, State.DENY);
+					Faction fac = Faction.get(args[1]);
+					for(MPlayer mplayer : fac.getMPlayers()) {
+						Player player = Bukkit.getPlayer(mplayer.getName());
+						region.getMembers().addPlayer(player.getName());
 					}
 				}
-			}
-			if (cmd.getName() == "WGFRemove" && args.length == 2) {
-				sender.sendMessage(ChatColor.BLUE + "Success!");
-				Faction fac = Faction.get(args[2]);
-				for (MPlayer MPlayer : fac.getMPlayers()) {
-					Player Member = getServer().getPlayer(MPlayer.getName());
-					if (ProtectedRegion.isValidId(arg1)) {
-						region.getMembers().removePlayer(Member.getName());
-					}else{
-						sender.sendMessage(ChatColor.RED + arg1 + " Is not a valid region!");
-					}
+				
+				return true;
+			} else {
+				if(cmd.getName() == "WGFRemove" && args.length == 2) {
+					WorldGuardPlugin plugin = getWorldGuard();
+					return true;
+				}else {
+					return false;
 				}
 			}
-			return true;
-		}
-			else {
-				return false;
+		} else {
+			return false;
 		}
 	}
 }
