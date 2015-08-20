@@ -40,6 +40,9 @@ public class main extends JavaPlugin implements CommandExecutor{
 		WorldGuardPlugin plug = getWorldGuard();
 		RegionManager RM = plug.getRegionContainer().get(Bukkit.getWorld("world"));
 		HashMap<String, ProtectedRegion>map = (HashMap<String, ProtectedRegion>) RM.getRegions();
+		for (ProtectedRegion region : map.values()) {
+			
+		}
 	}
 	public static main getInstance() {
 		return instance;
