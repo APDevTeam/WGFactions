@@ -11,5 +11,6 @@ public interface Messages {
 	String INVALID_FACTION = ChatColor.RED + "Invalid faction!";
 	String ADDED = ChatColor.AQUA + "Added all players from faction " + ChatColor.GREEN + "%s " + ChatColor.AQUA + "to region " + ChatColor.BLUE + "%s";
 	String REMOVED = ChatColor.AQUA + "Removed all players from faction " + ChatColor.GREEN + "%s " + ChatColor.AQUA + "from region " + ChatColor.BLUE + "%s";
+	String INVALID_MODE = ChatColor.RED + "Invalid add mode! Valid modes are OFFICER, MEMBER, or ALL";
 
 }

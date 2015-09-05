@@ -7,6 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.github.pocketkid2.wgf.AddType;
 import com.github.pocketkid2.wgf.Messages;
 import com.github.pocketkid2.wgf.WGFPlugin;
 import com.massivecraft.factions.entity.Faction;
@@ -27,12 +28,12 @@ public class WGFAddCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		// Check for not enough arguments
-		if (args.length < 2) {
+		if (args.length < 3) {
 			sender.sendMessage(Messages.NOT_ENOUGH_ARGUMENTS);
 		}
 
 		// Check for too many arguments
-		if (args.length > 3) {
+		if (args.length > 4) {
 			sender.sendMessage(Messages.TOO_MANY_ARGUMENTS);
 			return false;
 		}
@@ -40,10 +41,10 @@ public class WGFAddCommand implements CommandExecutor {
 		// World being used
 		World world;
 
-		// Check for a third argument
-		if (args.length == 3) {
+		// Check for a fourth argument
+		if (args.length == 4) {
 			// Then get the world
-			world = Bukkit.getWorld(args[2]);
+			world = Bukkit.getWorld(args[3]);
 
 			// Check for null
 			if (world == null) {
@@ -59,6 +60,23 @@ public class WGFAddCommand implements CommandExecutor {
 				sender.sendMessage(Messages.NOT_ENOUGH_ARGUMENTS);
 				return false;
 			}
+		}
+
+		// Get the mode
+		AddType mode;
+		switch (args[2].toLowerCase()) {
+		case "officer":
+			mode = AddType.OFFICERS;
+			break;
+		case "member":
+			mode = AddType.MEMBERS;
+			break;
+		case "all":
+			mode = AddType.ALL;
+			break;
+		default:
+			sender.sendMessage(Messages.INVALID_MODE);
+			return false;
 		}
 
 		// Get the region
@@ -83,14 +101,41 @@ public class WGFAddCommand implements CommandExecutor {
 
 		// Showtime
 		for (MPlayer player : faction.getMPlayers()) {
-			region.getMembers().addPlayer(player.getUuid());
+
+			switch (player.getRole()) {
+			// If it's a leader or officer, we add them automatically
+			case LEADER:
+			case OFFICER:
+				add(region, player);
+				break;
+			// If it's a member, we only add if it's one of the other two modes
+			case MEMBER:
+				if (mode != AddType.OFFICERS) {
+					add(region, player);
+				}
+				break;
+			// Recruits are only added on the last mode
+			case RECRUIT:
+				if (mode == AddType.ALL) {
+					add(region, player);
+				}
+				break;
+			default:
+				break;
+
+			}
 		}
 
 		// Notify the sender
-		sender.sendMessage(String.format(Messages.ADDED, faction.getName(), region.getId()));
+		sender.sendMessage(String.format(Messages.ADDED, mode.toString(), faction.getName(), region.getId()));
 
 		// We're done
 		return true;
+	}
+
+	// This prevents code reuse
+	private void add(ProtectedRegion region, MPlayer player) {
+		region.getMembers().addPlayer(player.getUuid());
 	}
 
 }

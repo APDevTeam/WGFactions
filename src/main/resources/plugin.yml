@@ -1,13 +1,13 @@
 name: WGFactions
 main: com.github.pocketkid2.wgf.WGFPlugin
-version: 0.1.0
+version: 0.1.1
 depend: [WorldGuard, Factions]
 author: Pocketkid2
 description: World Guard and Factions working together!
 commands:
     wgfadd:
         description: Add all players from a faction to a region
-        usage: /<command> <region> <faction> [world]
+        usage: /<command> <region> <faction> <officer|member|all> [world]
         permission: wgf.add
         permisison-message: You don't have permission!
     wgfremove:
