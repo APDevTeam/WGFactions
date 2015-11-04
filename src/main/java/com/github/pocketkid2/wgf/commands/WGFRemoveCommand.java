@@ -29,6 +29,7 @@ public class WGFRemoveCommand implements CommandExecutor {
 		// Check for not enough arguments
 		if (args.length < 2) {
 			sender.sendMessage(Messages.NOT_ENOUGH_ARGUMENTS);
+			return false;
 		}
 
 		// Check for too many arguments
@@ -69,6 +70,13 @@ public class WGFRemoveCommand implements CommandExecutor {
 		// Check for null
 		if (region == null) {
 			sender.sendMessage(Messages.INVALID_REGION);
+			return false;
+		}
+
+		//Check if sender is the owner of the region or has the overide permissions 
+		if (sender.hasPermission(wgf.overide)||region.isOwner((player)sender))
+		{
+			sender.sendMessage(Messages.SENDER_NOT_OWNER);	
 			return false;
 		}
 
