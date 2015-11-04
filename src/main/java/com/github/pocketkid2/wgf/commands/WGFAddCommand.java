@@ -30,6 +30,7 @@ public class WGFAddCommand implements CommandExecutor {
 		// Check for not enough arguments
 		if (args.length < 3) {
 			sender.sendMessage(Messages.NOT_ENOUGH_ARGUMENTS);
+			return false;
 		}
 
 		// Check for too many arguments
@@ -52,7 +53,7 @@ public class WGFAddCommand implements CommandExecutor {
 				return false;
 			}
 		} else {
-			// If not, he must be a player
+			// If not, sender must be a player
 			if (sender instanceof Player) {
 				world = ((Player) sender).getWorld();
 			} else {
@@ -89,7 +90,13 @@ public class WGFAddCommand implements CommandExecutor {
 			sender.sendMessage(Messages.INVALID_REGION);
 			return false;
 		}
-
+		//Check if sender is the owner of the region or has the overide permissions 
+		if (sender.hasPermission(wgf.overide||region.isOwner(player)sender)
+		{
+			sender.sendMessage(Messages.SENDER_NOT_OWNER);	
+			return false;
+		}
+}
 		// Get the faction
 		Faction faction = FactionColl.get().getByName(args[1]);
 
