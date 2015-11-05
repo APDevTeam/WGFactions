@@ -73,8 +73,8 @@ public class WGFRemoveCommand implements CommandExecutor {
 			return false;
 		}
 
-		//Check if sender is the owner of the region or has the overide permissions 
-		if (sender.hasPermission(wgf.overide)||region.isOwner((player)sender))
+		//Check if sender is the owner of the region or has the override permissions 
+		if (sender.hasPermission(wgf.override)||region.isOwner((player)sender))
 		{
 			sender.sendMessage(Messages.SENDER_NOT_OWNER);	
 			return false;
