@@ -22,6 +22,6 @@ permissions:
     wgf.remove:
         description: Allows /wgfremove
         default: op
-    wgf.overide:
+    wgf.override:
         description: Allows entitys other then the owner of a region to use /wgfremove & /wgfadd
         default: op
