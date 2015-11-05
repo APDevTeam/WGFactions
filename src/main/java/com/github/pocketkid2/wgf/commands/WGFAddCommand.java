@@ -96,7 +96,7 @@ public class WGFAddCommand implements CommandExecutor {
 			sender.sendMessage(Messages.SENDER_NOT_OWNER);	
 			return false;
 		}
-}
+
 		// Get the faction
 		Faction faction = FactionColl.get().getByName(args[1]);
 
