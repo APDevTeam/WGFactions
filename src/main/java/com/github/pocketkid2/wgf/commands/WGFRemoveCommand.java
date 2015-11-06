@@ -91,6 +91,7 @@ public class WGFRemoveCommand implements CommandExecutor {
 
 		// Showtime
 		for (MPlayer player : faction.getMPlayers()) {
+			if(player==(player)sender)
 			region.getMembers().removePlayer(player.getUuid());
 		}
 
