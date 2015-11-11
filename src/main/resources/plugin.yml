@@ -6,12 +6,12 @@ author: Pocketkid2
 description: World Guard and Factions working together!
 commands:
     wgfadd:
-        description: Add all players from a faction to a region
+        description: Add all players in a group of a faction to a region
         usage: /<command> <region> <faction> <officer|member|all> [world]
         permission: wgf.add
         permisison-message: You don't have permission!
     wgfremove:
-        description: Remove all players from a faction frmo a region
+        description: Remove all players in a faction from a region
         usage: /<command> <region> <faction> [world]
         permission: wgf.remove
         permission-message: You don't have permission!
@@ -21,4 +21,7 @@ permissions:
         default: op
     wgf.remove:
         description: Allows /wgfremove
+        default: op
+    wgf.override:
+        description: Allows entitys other then the owner of a region to use /wgfremove & /wgfadd
         default: op

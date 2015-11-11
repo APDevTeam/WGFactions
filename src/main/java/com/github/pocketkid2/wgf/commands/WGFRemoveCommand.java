@@ -29,6 +29,7 @@ public class WGFRemoveCommand implements CommandExecutor {
 		// Check for not enough arguments
 		if (args.length < 2) {
 			sender.sendMessage(Messages.NOT_ENOUGH_ARGUMENTS);
+			return false;
 		}
 
 		// Check for too many arguments
@@ -72,6 +73,13 @@ public class WGFRemoveCommand implements CommandExecutor {
 			return false;
 		}
 
+		//Check if sender is the owner of the region or has the override permissions 
+		if (sender.hasPermission(wgf.override)||region.isOwner((player)sender))
+		{
+			sender.sendMessage(Messages.SENDER_NOT_OWNER);	
+			return false;
+		}
+
 		// Get the faction
 		Faction faction = FactionColl.get().getByName(args[1]);
 
@@ -83,6 +91,7 @@ public class WGFRemoveCommand implements CommandExecutor {
 
 		// Showtime
 		for (MPlayer player : faction.getMPlayers()) {
+			if(player==(player)sender)
 			region.getMembers().removePlayer(player.getUuid());
 		}
 
