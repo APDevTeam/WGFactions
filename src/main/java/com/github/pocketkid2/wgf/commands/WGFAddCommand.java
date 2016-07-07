@@ -91,7 +91,7 @@ public class WGFAddCommand implements CommandExecutor {
 			return false;
 		}
 		//Check if sender is the owner of the region or has the override permissions 
-		if (((player)sender).hasPermission("wgf.override")||region.isOwner((LocalPlayer)sender))
+		if (((Player)sender).hasPermission("wgf.override")||region.isOwner((Player)sender))
 		{
 			sender.sendMessage(Messages.SENDER_NOT_OWNER);	
 			return false;
