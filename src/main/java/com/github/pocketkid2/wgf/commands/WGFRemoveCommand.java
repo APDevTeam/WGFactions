@@ -15,6 +15,7 @@ import com.massivecraft.factions.entity.MPlayer;
 import com.sk89q.worldguard.bukkit.RegionContainer;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import com.sk89q.worldguard.LocalPlayer;
 
 public class WGFRemoveCommand implements CommandExecutor {
 
@@ -74,7 +75,7 @@ public class WGFRemoveCommand implements CommandExecutor {
 		}
 
 		//Check if sender is the owner of the region or has the override permissions 
-		if (((player)sender).hasPermission("wgf.override")||region.isOwner((LocalPlayer)sender))
+		if (((Player)sender).hasPermission("wgf.override")||region.isOwner((LocalPlayer)sender))
 		{
 			sender.sendMessage(Messages.SENDER_NOT_OWNER);	
 			return false;
@@ -91,7 +92,7 @@ public class WGFRemoveCommand implements CommandExecutor {
 
 		// Showtime
 		for (MPlayer player : faction.getMPlayers()) {
-			if(player==(player)sender)
+			if(player==(Player)sender)
 			region.getMembers().removePlayer(player.getUuid());
 		}
 
