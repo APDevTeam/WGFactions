@@ -16,6 +16,7 @@ import com.massivecraft.factions.entity.MPlayer;
 import com.sk89q.worldguard.bukkit.RegionContainer;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import com.sk89q.worldguard.LocalPlayer;
 
 public class WGFAddCommand implements CommandExecutor {
 
@@ -91,7 +92,7 @@ public class WGFAddCommand implements CommandExecutor {
 			return false;
 		}
 		//Check if sender is the owner of the region or has the override permissions 
-		if (((Player)sender).hasPermission("wgf.override")||region.isOwner((Player)sender))
+		if (((Player)sender).hasPermission("wgf.override")||region.isOwner((LocalPlayer)sender))
 		{
 			sender.sendMessage(Messages.SENDER_NOT_OWNER);	
 			return false;
