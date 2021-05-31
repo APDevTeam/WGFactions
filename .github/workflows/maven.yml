@@ -1,0 +1,37 @@
+name: Java CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout WGFactions
+      uses: actions/checkout@v2
+      with:
+        path: WGFactions
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+    - name: Cache Maven packages
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2
+        restore-keys: ${{ runner.os }}-m2
+    
+    # Build WGFactions
+    - name: Build WGFactions
+      run: mvn -B package -T 1C --file WGFactions/pom.xml
+
+    - name: Stage jar
+      run: mkdir staging && cp WGFactions/target/WGFactions.jar staging
+    - name: Rename jar
+      run: mv staging/WGFactions*.jar staging/WGFactions_$GITHUB_SHA.jar
+    - name: Upload jar
+      uses: actions/upload-artifact@v2
+      with:
+        name: WGFactions_Dev-Build
+        path: staging/WGFactions_*.jar
