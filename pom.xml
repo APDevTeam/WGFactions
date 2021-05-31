@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.pocketkid2</groupId>
 	<artifactId>WGFactions</artifactId>
-	<version>0.1.1</version>
+	<version>0.2.a</version>
 	<name>WGFactions</name>
 	<description>World Guard and Factions working together!</description>
 	<properties>
@@ -45,19 +45,21 @@
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
-			<version>1.12.2-R0.1-SNAPSHOT</version>
+			<version>1.14.4-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
+		<!--WorldEdit-->
 		<dependency>
 			<groupId>com.sk89q.worldedit</groupId>
 			<artifactId>worldedit-core</artifactId>
-			<version>6.1.4-SNAPSHOT</version>
+			<version>7.2.3</version>
 			<scope>provided</scope>
 		</dependency>
+		<!--WorldGuard-->
 		<dependency>
 			<groupId>com.sk89q.worldguard</groupId>
-			<artifactId>worldguard-legacy</artifactId>
-			<version>6.2</version>
+			<artifactId>worldguard-bukkit</artifactId>
+			<version>7.0.4</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -65,14 +67,14 @@
 			<artifactId>Factions</artifactId>
 			<version>3.3.2</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/Factions.jar</systemPath>
+			<systemPath>${project.basedir}/libs/Factions.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.massivecraft.massivecore</groupId>
 			<artifactId>MassiveCore</artifactId>
 			<version>3.3.2</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/MassiveCore.jar</systemPath>
+			<systemPath>${project.basedir}/libs/MassiveCore.jar</systemPath>
 		</dependency>
 	</dependencies>
 </project>

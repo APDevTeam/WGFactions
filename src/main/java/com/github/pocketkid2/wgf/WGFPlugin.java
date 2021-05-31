@@ -4,8 +4,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.pocketkid2.wgf.commands.WGFAddCommand;
 import com.github.pocketkid2.wgf.commands.WGFRemoveCommand;
-import com.sk89q.worldguard.bukkit.WGBukkit;
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
 public class WGFPlugin extends JavaPlugin {
 
@@ -22,14 +20,5 @@ public class WGFPlugin extends JavaPlugin {
 	public void onDisable() {
 		// Log status
 		getLogger().info("Done!");
-	}
-
-	/**
-	 * This method retrieves the WorldGuardPlugin object for use.
-	 * 
-	 * @return
-	 */
-	public WorldGuardPlugin getWorldGuard() {
-		return WGBukkit.getPlugin();
 	}
 }

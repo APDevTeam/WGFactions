@@ -1,5 +1,8 @@
 package com.github.pocketkid2.wgf.commands;
 
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.protection.regions.RegionContainer;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -12,7 +15,6 @@ import com.github.pocketkid2.wgf.WGFPlugin;
 import com.massivecraft.factions.entity.Faction;
 import com.massivecraft.factions.entity.FactionColl;
 import com.massivecraft.factions.entity.MPlayer;
-import com.sk89q.worldguard.bukkit.RegionContainer;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.LocalPlayer;
@@ -64,8 +66,8 @@ public class WGFRemoveCommand implements CommandExecutor {
 		}
 
 		// Get the region
-		RegionContainer container = plugin.getWorldGuard().getRegionContainer();
-		RegionManager manager = container.get(world);
+		RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
+		RegionManager manager = container.get(BukkitAdapter.adapt(world));
 		ProtectedRegion region = manager.getRegion(args[0]);
 
 		// Check for null

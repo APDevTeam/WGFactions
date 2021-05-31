@@ -1,5 +1,9 @@
 package com.github.pocketkid2.wgf.commands;
 
+import com.massivecraft.factions.entity.Rank;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.protection.regions.RegionContainer;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -13,7 +17,6 @@ import com.github.pocketkid2.wgf.WGFPlugin;
 import com.massivecraft.factions.entity.Faction;
 import com.massivecraft.factions.entity.FactionColl;
 import com.massivecraft.factions.entity.MPlayer;
-import com.sk89q.worldguard.bukkit.RegionContainer;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.LocalPlayer;
@@ -82,8 +85,8 @@ public class WGFAddCommand implements CommandExecutor {
 		}
 
 		// Get the region
-		RegionContainer container = plugin.getWorldGuard().getRegionContainer();
-		RegionManager manager = container.get(world);
+		RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
+		RegionManager manager = container.get(BukkitAdapter.adapt(world));
 		ProtectedRegion region = manager.getRegion(args[0]);
 
 		// Check for null
@@ -109,28 +112,23 @@ public class WGFAddCommand implements CommandExecutor {
 
 		// Showtime
 		for (MPlayer player : faction.getMPlayers()) {
+			if(player.getFaction() != faction)
+				continue;
 
-			switch (player.getRole()) {
-			// If it's a leader or officer, we add them automatically
-			case LEADER:
-			case OFFICER:
-				add(region, player);
-				break;
-			// If it's a member, we only add if it's one of the other two modes
-			case MEMBER:
-				if (mode != AddType.OFFICERS) {
+			switch(mode) {
+				case ALL:
 					add(region, player);
-				}
-				break;
-			// Recruits are only added on the last mode
-			case RECRUIT:
-				if (mode == AddType.ALL) {
-					add(region, player);
-				}
-				break;
-			default:
-				break;
-
+					break;
+				case MEMBERS:
+					if(player.getRank().isMoreThan(faction.getLowestRank()))
+						add(region, player);
+					break;
+				case OFFICERS:
+					if(player.getRank().isAtLeast(faction.getLeaderRank().getRankBelow()))
+						add(region, player);
+					break;
+				default:
+					break;
 			}
 		}
 
