@@ -1,6 +1,7 @@
 name: WGFactions
 main: com.github.pocketkid2.wgf.WGFPlugin
-version: 0.1.1
+version: 0.1.2
+api-version: 1.14
 depend: [WorldGuard, Factions]
 author: Pocketkid2
 description: World Guard and Factions working together!
